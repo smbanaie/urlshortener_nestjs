@@ -2,8 +2,8 @@ import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { application } from '../src/application';
 import { Connection, EntityManager } from 'typeorm';
-import { Link } from '../src/links/link.entity'
-import { UrlHasher } from '../src/links/helpers/url-hasher.helper';
+import { UrlLink } from '../src/shortener/shortener.entity'
+import { UrlHasher } from '../src/shortener/helpers/url-hasher.helper';
 
 describe('Application endpoints', () => {
   let app: INestApplication;
@@ -75,7 +75,7 @@ describe('Application endpoints', () => {
     })
 
     it('creates a new short link when one does not already exist', async () => {
-      let initialCount = await manager.count(Link)
+      let initialCount = await manager.count(UrlLink)
 
       await request(app.getHttpServer())
         .post('/short_link')
@@ -86,16 +86,16 @@ describe('Application endpoints', () => {
           let data = JSON.parse(response.text)
 
           expect(data.longUrl).toEqual('http://google.com')
-          expect(data.shortLink).toMatch(/^http:\/\/localhost:3000\/[\w\d]{6}$/)
+          expect(data.shortLink).toMatch(`${process.env.URL}:${process.env.PORT}\/[\w\d]{6}$/`)
         })
 
-        let currentCount = await manager.count(Link)
+        let currentCount = await manager.count(UrlLink)
 
         expect(currentCount).toEqual(initialCount + 1)
     })
 
     it('returns an existing short link', async () => {
-      let link = new Link()
+      let link = new UrlLink()
       link.url = "http://google.com"
       link.code = "d3db3f"
       link.urlHash = (new UrlHasher(link.url)).hash
@@ -104,7 +104,7 @@ describe('Application endpoints', () => {
 
       expect(link.id).not.toBeUndefined()
 
-      let initialCount = await manager.count(Link)
+      let initialCount = await manager.count(UrlLink)
 
       await request(app.getHttpServer())
         .post('/short_link')
@@ -114,17 +114,17 @@ describe('Application endpoints', () => {
         .then(response => {
           expect(JSON.parse(response.text)).toEqual({
             longUrl: 'http://google.com',
-            shortLink: 'http://localhost:3000/d3db3f'
+            shortLink: `${process.env.URL}:${process.env.PORT}/d3db3f`
           })
         })
 
-      let currentCount = await manager.count(Link)
+      let currentCount = await manager.count(UrlLink)
 
       expect(currentCount).toEqual(initialCount)
     })
 
     it('is case insensitive when returning an existing link', async () => {
-      let link = new Link()
+      let link = new UrlLink()
       link.url = "HTTP://GOOGLE.COM"
       link.code = "d3db3f"
       link.urlHash = (new UrlHasher(link.url)).hash
@@ -141,7 +141,7 @@ describe('Application endpoints', () => {
         .then(response => {
           expect(JSON.parse(response.text)).toEqual({
             longUrl: 'HTTP://GOOGLE.COM',
-            shortLink: 'http://localhost:3000/d3db3f'
+            shortLink: `${process.env.URL}:${process.env.PORT}/d3db3f`
           })
         })
     })
@@ -155,7 +155,7 @@ describe('Application endpoints', () => {
     })
 
     it('sends a permanent redirect when the code is found', async () => {
-      let link = new Link()
+      let link = new UrlLink()
 
       link.url = "http://google.com"
       link.code = "d3db3f"

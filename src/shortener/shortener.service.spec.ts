@@ -1,4 +1,4 @@
-import { LinkService } from './link.service';
+import { ShortenerService } from './shortener.service';
 
 describe('LinkService', () => {
   it('does something', () => {

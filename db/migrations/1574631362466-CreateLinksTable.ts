@@ -21,13 +21,6 @@ export class CreateLinksTable1574631362466 implements MigrationInterface {
           isNullable: false,
         },
         {
-          name: 'url_hash',
-          type: 'char',
-          length: '32',
-          isNullable: false,
-          isUnique: true,
-        },
-        {
           name: 'code',
           type: 'char',
           length: '6',

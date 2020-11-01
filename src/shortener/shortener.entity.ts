@@ -4,11 +4,10 @@ import {
   CreateDateColumn,
   Column,
 } from 'typeorm';
-
 import { Exclude } from 'class-transformer';
 
 @Entity('links')
-export class Link {
+export class UrlLink {
   @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,9 +15,9 @@ export class Link {
   @Column({ length: 2000 })
   url: string;
 
-  @Exclude()
-  @Column({ length: 32, name: 'url_hash' })
-  urlHash: string;
+  // @Exclude()
+  // @Column({ length: 32, name: 'url_hash' })
+  // urlHash: string;
 
   @Exclude()
   @Column({ length: 6 })
@@ -29,6 +28,6 @@ export class Link {
   createdAt: Date;
 
   get shortLink(): string {
-    return `http://localhost:3000/{ $code }`;
+    return `${process.env.URL}:${process.env.PORT}/{ $code }`;
   }
 }
