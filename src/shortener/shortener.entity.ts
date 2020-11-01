@@ -12,16 +12,12 @@ import { UserEntity } from '../user/user.entity'
 @Entity('links')
 export class UrlLink {
   @Exclude()
-  @PrimaryGeneratedColumn('uuid') 
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ length: 2000 })
   @Length(10,2000)
   url: string;
-
-  // @Exclude()
-  // @Column({ length: 32, name: 'url_hash' })
-  // urlHash: string;
 
   @Exclude()
   @Column({ length: 10 })
