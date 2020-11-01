@@ -4,6 +4,7 @@ import { Request } from 'express'
 import { ShortenerService } from './shortener.service';
 import { CreateDto } from './dto/create.dto';
 import { ShowDto } from './dto/show.dto';
+import {ApiResponse} from '@nestjs/swagger';
 
 @Controller("api/v1/shorten")
 export class LinkShortenerController {
@@ -11,7 +12,8 @@ export class LinkShortenerController {
 
   @Post('original_link')
   @Header('Content-Type', 'application/json')
-  @HttpCode(201)
+  @ApiResponse({ status: 201, description: 'Short Code Generated Sucessfully' })
+  @ApiResponse({ status: 409, description: 'Provided Code Already Exist' })
   async create(@Req() request: Request, @Body() dto: CreateDto): Promise<ShowDto> {
     return this.service.create(dto);
   }
