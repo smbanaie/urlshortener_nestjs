@@ -17,10 +17,11 @@ export class LinkShortenerController {
   @Header('Content-Type', 'application/json')
   @ApiResponse({ status: 201, description: 'Short Code Generated Sucessfully' })
   @ApiResponse({ status: 409, description: 'Provided Code Already Exist' })
-  @UseGuards(AuthGuard()) 
   @ApiBearerAuth() 
+  @UseGuards(AuthGuard()) 
   async create(@Req() req: Request, @Body() dto: CreateShortLinkDto): Promise<ShowDto> {
     const user = <UserDto>req.user;
+    console.log(`User : ${user}`)
     return this.service.create(user, dto);
   }
 
