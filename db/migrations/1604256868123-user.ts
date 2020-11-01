@@ -31,11 +31,14 @@ export class user1604256868123 implements MigrationInterface {
                 name: 'email',
                 type: 'varchar',
                 length: '100',
-                isNullable: true, 
+                isNullable: true,
+                isUnique : true,
               },
 
           ],
         }));
+
+
   
     } 
       public async down(queryRunner: QueryRunner): Promise<any> {

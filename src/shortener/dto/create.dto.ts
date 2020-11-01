@@ -3,7 +3,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 
 
-export class CreateDto {
+export class CreateShortLinkDto {
   @IsUrl()
   @Length(10, 2000)
   @ApiProperty({description:'Required : The Long URL'})

@@ -45,13 +45,6 @@ export class init1604256510134 implements MigrationInterface {
             ],
         }));
 
-        await queryRunner.createForeignKey('user_fk', new TableForeignKey({
-            columnNames: ['user_id'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'user',
-            onDelete: 'RESTRICT',
-          }));
-
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {

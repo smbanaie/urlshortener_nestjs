@@ -1,10 +1,11 @@
+// import * as dotenv from 'dotenv';
+// dotenv.config();
+require("dotenv").config();
 import { application } from './application';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import configuration = require('ormconfig');
 
 // import * as dotenv from 'dotenv';
-import 'dotenv/config';
-
 // dotenv.config();
 
 const APP_VERSION = process.env.npm_package_version;
@@ -16,6 +17,7 @@ async function bootstrap() {
   .setTitle("URL Shortener Demo")
   .setDescription(`Yektanet Hiring Process - Software Eng. Skill Assesment`)
   .setVersion(APP_VERSION)
+  .addBearerAuth()
   .build();
 const document = SwaggerModule.createDocument(app, options);
 // Set Home URL on swagger gui.

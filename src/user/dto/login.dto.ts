@@ -3,14 +3,12 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class LoginUserDto {  
     @MinLength(3)  
-    @ApiProperty({description:'User Name >= 3 Chars'})
+    @ApiProperty({description:'User Name >= 3 Chars', example:"yektanet"})
     username: string;
 
     @MinLength(3)
-    @ApiProperty({description:'Password >= 3 Chars'})
+    @ApiProperty({description:'Password >= 3 Chars', example:"123456"})
     password: string;
-
-
 }
 
 

@@ -20,8 +20,10 @@ export class UsersService {
     ){}
     
     async comparePasswords(p1 : string,p2:string): Promise<Boolean>{
-        let p2_hash =  await bcrypt.hash(p2, 10);   
-        return p1===p2_hash;
+        // console.log(`Compare Pass\n*****************`)
+        // console.log(` P1 : ${p1}\n*****************`)
+        // console.log(` P2 : ${p2}\n*****************`)
+        return bcrypt.compare(p2, p1);
      }
 
     async findOne(options?: object): Promise<UserDto> {
@@ -31,7 +33,7 @@ export class UsersService {
       
     async findByLogin({ username, password }: LoginUserDto): Promise<UserDto> {    
         const user = await this.userRepo.findOne({ where: { username } });
-        
+        // console.log(`Username Found : ${user.username}\n*****************`)
         if (!user) {
             throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);    
         }

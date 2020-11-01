@@ -6,8 +6,8 @@ import { UserDto } from '../user/dto/show.dto';
 import { LoginUserDto } from '../user/dto/login.dto'
 import { CreateUserDto } from '../user/dto/create.dto'
 import { JwtPayload } from '../shared/jwt.payload'
-import { LoginStatus } from '../shared/login.status'
 import { HttpException,HttpStatus } from '@nestjs/common';
+
 
 
 @Injectable()
@@ -35,15 +35,17 @@ export class AuthService {
     }
 
 
-    async login(loginUserDto: LoginUserDto): Promise<LoginStatus> {    
+    async login(loginUserDto: LoginUserDto): Promise<{username,accessToken}> {    
         // find user in db    
         const user = await this.usersService.findByLogin(loginUserDto);
         
         // generate and sign token    
         const token = this._createToken(user);
         
+
+        
         return {
-            username: user.username, ...token,    
+            id : user.id, username: user.username, ...token,    
         };  
     }
     

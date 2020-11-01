@@ -3,7 +3,8 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Column,
-  ManyToOne
+  ManyToOne,
+  JoinColumn
 } from 'typeorm';
 import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from "class-validator";
 import { Exclude } from 'class-transformer';
@@ -20,6 +21,10 @@ export class UrlLink {
   url: string;
 
   @Exclude()
+  @Column()
+  user_id: number;
+
+  @Exclude()
   @Column({ length: 10 })
   @Length(6,10)
   code: string;
@@ -33,6 +38,7 @@ export class UrlLink {
   }
 
   @Exclude()
-  @ManyToOne(() => UserEntity, UserEntity => UserEntity.links)
-    user: UserEntity;
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: "user_id", referencedColumnName: "id"})
+  user: UserEntity;
 }

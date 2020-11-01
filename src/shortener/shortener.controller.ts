@@ -1,22 +1,27 @@
-import { Header,HttpCode } from '@nestjs/common';
-import { Controller, Post, Body, Req } from '@nestjs/common';
+import { Header } from '@nestjs/common';
+import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express'
 import { ShortenerService } from './shortener.service';
-import { CreateDto } from './dto/create.dto';
+import { CreateShortLinkDto } from './dto/create.dto';
 import { ShowDto } from './dto/show.dto';
-import {ApiResponse} from '@nestjs/swagger';
+import {ApiResponse,ApiBearerAuth} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { UserDto } from '../user/dto/show.dto'
+
 
 @Controller("api/v1/shorten")
 export class LinkShortenerController {
   constructor(private readonly service: ShortenerService) {}
 
-  @Post('original_link')
+  @Post('link')
   @Header('Content-Type', 'application/json')
   @ApiResponse({ status: 201, description: 'Short Code Generated Sucessfully' })
   @ApiResponse({ status: 409, description: 'Provided Code Already Exist' })
-  async create(@Req() request: Request, @Body() dto: CreateDto): Promise<ShowDto> {
-    return this.service.create(dto);
+  @UseGuards(AuthGuard()) 
+  @ApiBearerAuth() 
+  async create(@Req() req: Request, @Body() dto: CreateShortLinkDto): Promise<ShowDto> {
+    const user = <UserDto>req.user;
+    return this.service.create(user, dto);
   }
 
-  
 }

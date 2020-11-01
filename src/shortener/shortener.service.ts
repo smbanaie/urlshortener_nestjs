@@ -4,8 +4,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UrlLink } from './shortener.entity';
-import { CreateDto } from './dto/create.dto';
+import { CreateShortLinkDto } from './dto/create.dto';
 import { ShowDto } from './dto/show.dto'
+import { UserDto } from '../user/dto/show.dto';
+
 
 @Injectable()
 export class ShortenerService {
@@ -14,11 +16,11 @@ export class ShortenerService {
     private readonly repo: Repository<UrlLink>,
   ) { }
 
-  async create(dto: CreateDto): Promise<ShowDto> {
+  async create({id} : UserDto ,createLinkDto: CreateShortLinkDto): Promise<ShowDto> {
 
 
     let existingCode = null;
-    let shortCode = dto.ShortCode;
+    let shortCode = createLinkDto.ShortCode;
     if (shortCode) {
       existingCode = await this.repo.findOne({ where: { code: shortCode } });
       if (existingCode) {
@@ -34,9 +36,12 @@ export class ShortenerService {
       console.log(`Existing : ${existingCode}`);
     } while (existingCode != undefined);
 
+
+    
     const link = this.repo.create({
-      url: dto.longUrl,
+      url: createLinkDto.longUrl,
       code: shortCode,
+      user_id : id,
     });
 
     const created = await this.repo.save(link);
