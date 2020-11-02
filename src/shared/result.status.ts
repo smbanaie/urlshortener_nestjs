@@ -1,6 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, IsJSON } from 'class-validator';
+import { UserDto } from '../user/dto/show.dto'
+
+class Result {
+    @ApiProperty({ example: 'success' })
+    status: string;
+    @ApiProperty({ example: 'Login Successfull' })
+    message: string;
+}
+export class RegisterResult extends  Result {
+    @ApiProperty({ type: UserDto })
+    @IsJSON()
+    data: UserDto;
+} 
 
 export class LoginResultPayload {
     @ApiProperty({ type: String, example : 'mojtaba' })
@@ -13,11 +26,9 @@ export class LoginResultPayload {
     @IsString()
     accessToken: string;
 }
-export class LoginResult {
-    @ApiProperty({ example: 'success' })
-    status: string;
-    @ApiProperty({ example: 'Login Successfull' })
-    message: string;
+
+export class LoginResult extends Result {
+
     @ApiProperty({ type: LoginResultPayload })
     @IsJSON()
     data: LoginResultPayload

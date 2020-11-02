@@ -31,8 +31,12 @@ export class UsersService {
         return toUserDto(user);  
     }
       
-    async findByLogin({ username, password }: LoginUserDto): Promise<UserDto> {    
-        const user = await this.userRepo.findOne({ where: { username } });
+    async findByLogin({ input, password }: LoginUserDto, is_email:boolean=false): Promise<UserDto> {    
+        let  user : UserEntity
+        if(is_email)
+            user = await this.userRepo.findOne({ where: { email : input } });
+         else 
+            user = await this.userRepo.findOne({ where: { username : input } });
         // console.log(`Username Found : ${user.username}\n*****************`)
         if (!user) {
             throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);    

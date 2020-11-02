@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import  { UsersService } from '../user/user.service'
 import { JwtService } from  '@nestjs/jwt'
-import { RegistrationStatus } from  '../shared/registration.status'
+import { RegisterResult } from  '../shared/result.status'
 import { UserDto } from '../user/dto/show.dto';
 import { LoginUserDto } from '../user/dto/login.dto'
 import { CreateUserDto } from '../user/dto/create.dto'
 import { JwtPayload } from '../shared/jwt.payload'
 import { HttpException,HttpStatus } from '@nestjs/common';
-
+import { toUserDto } from 'src/shared/mapper';
+import  { isEmail } from 'class-validator';
 
 
 @Injectable()
@@ -18,34 +19,45 @@ export class AuthService {
     ) { }
 
     async register(userDto: CreateUserDto): 
-    Promise<RegistrationStatus> {
-        let status: RegistrationStatus = {
-            success: true,   
-            message: 'user registered',
-        };
+    Promise<RegisterResult> {
+        let status = 'success'
+        let message = 'User Registered!'
+        let data = null
         try {
-            await this.usersService.create(userDto);
+           let user =  await this.usersService.create(userDto);
+           return  {
+               status : status,
+               message : message,
+               data : user
+           }
         } catch (err) {
-            status = {
-                success: false,        
-                message: err,
-            };    
+            return {
+                message : err,
+                status :'failure' ,
+                data : null
+            }
         }
-        return status;  
     }
 
 
     async login(loginUserDto: LoginUserDto): Promise<{username,accessToken}> {    
         // find user in db    
-        const user = await this.usersService.findByLogin(loginUserDto);
+        let user = null 
+        if (isEmail(loginUserDto.input)){
+            user =  await this.usersService.findByLogin(loginUserDto,true);
+         }
+        else         
+            user =  await this.usersService.findByLogin(loginUserDto, false);
         
+
+
         // generate and sign token    
         const token = this._createToken(user);
         
 
         
         return {
-            id : user.id, username: user.username, ...token,    
+            username: user.username, ...token,    
         };  
     }
     
@@ -65,5 +77,4 @@ export class AuthService {
         }    
         return user;  
     }
-
 }

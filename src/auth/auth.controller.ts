@@ -1,7 +1,7 @@
 import { AuthService } from './auth.service'
 import { Controller, Post, Body, Req , Res} from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create.dto'
-import { RegistrationStatus } from '../shared/registration.status'
+import { RegisterResult } from '../shared/result.status'
 import { LoginUserDto } from '../user/dto/login.dto'
 import { LoginResult } from '../shared/result.status'
 import { HttpException,HttpStatus } from '@nestjs/common';
@@ -16,21 +16,16 @@ export class AuthController {
         AuthService) {}
 
         @Post('register')  
-        @ApiCreatedResponse()
-        public async register(@Body() createUserDto: CreateUserDto, @Res() res): Promise<RegistrationStatus> {    
-            const result: 
-            RegistrationStatus = await this.authService.register(createUserDto,);
-            if (!result.success) {
+        @ApiCreatedResponse({ status : 201, description: 'User Registeration ', type : RegisterResult } )
+        public async register(@Body() createUserDto: CreateUserDto, @Res() res): Promise<RegisterResult> {    
+            const result: RegisterResult = await this.authService.register(createUserDto,);
+            if (result.status !== 'success') {
                 throw new HttpException(result.message, HttpStatus.BAD_REQUEST);    
             }
-            return res.status(HttpStatus.CREATED).json({
-                status: "success",
-                message : "user registered successfully",
-                data: null
-            })
+            return res.status(HttpStatus.CREATED).json(result)
         }
         @Post('login')  
-        @ApiResponse({ status : 200, description: 'Login With Username and Password', type : LoginResult } )
+        @ApiResponse({ status : 200, description: 'Login With (Username Or Email) and Password', type : LoginResult } )
         public async login(@Body() loginUserDto: LoginUserDto, @Res() res): Promise<LoginResult> {
             let credentials =  await this.authService.login(loginUserDto);  
             return res.status(HttpStatus.OK).json({
