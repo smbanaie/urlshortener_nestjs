@@ -9,11 +9,10 @@ import { AuthService } from './auth/auth.service';
 import { RedirectService } from './redirect/redirect.service';
 import { RedirectModule } from './redirect/redirect.module';
 import { AuthModule }  from './auth/auth.module';
-
-
+import { Accesses } from './redirect/access.entity';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(DBConfig),  TypeOrmModule.forFeature([UserEntity]), LinkModule, UserModule, AuthModule, RedirectModule],
+  imports: [TypeOrmModule.forRoot(DBConfig),  TypeOrmModule.forFeature([UserEntity, Accesses]), LinkModule, UserModule, AuthModule, RedirectModule],
   providers: [UsersService, AuthService, RedirectService]
   })
 export class AppModule {}

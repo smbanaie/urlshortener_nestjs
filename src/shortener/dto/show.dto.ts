@@ -1,4 +1,5 @@
 export class LinkInfoDto {
-  longUrl:string
-  shortLink:string
+  longUrl:string;
+  shortLink:string;
+  id : number;
 }

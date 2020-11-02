@@ -58,12 +58,14 @@ export class ShortenerService {
       console.log(`Url for Code:${code} : ${link.url}`)
       return {
         longUrl : link.url,
-        shortLink : `${process.env.URL}:${process.env.PORT}/r/${link.code}`
+        shortLink : `${process.env.URL}:${process.env.PORT}/r/${link.code}`,
+        id : link.id
       }
     }
     return {
       longUrl : null,
-      shortLink : null
+      shortLink : null,
+      id : null
     }
     
 
