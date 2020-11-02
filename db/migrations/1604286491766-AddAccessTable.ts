@@ -23,30 +23,40 @@ export class AddAccessTable1604286491766 implements MigrationInterface {
                     name: 'referrer_url',
                     type: 'varchar',
                     length: '2000',
+                    isNullable: true,
                 },
                 {
                     name: 'user_agent',
                     type: 'varchar',
                     length: '2000',
+                    isNullable: true,
                 },
                 {
                     name: 'browser',
                     type: 'varchar',
                     length: '50',
+                    isNullable: true,
+
                 }, {
                     name: 'ip',
                     type: 'varchar',
                     length: '100',
+                    isNullable: true,
+
                 },
                 {
                     name: 'os',
                     type: 'varchar',
                     length: '100',
+                    isNullable: true,
+
                 },
                 {
                     name: 'agent_type',
                     type: 'varchar',
                     length: '50',
+                    isNullable: true,
+
                 },
                 {
                     name: 'created_at',
