@@ -34,7 +34,7 @@ export class UrlLink {
   createdAt: Date;
 
   get shortLink(): string {
-    return `${process.env.URL}:${process.env.PORT}/{ $code }`;
+    return `${process.env.URL}:${process.env.PORT}/r/{ $code }`;
   }
 
   @Exclude()

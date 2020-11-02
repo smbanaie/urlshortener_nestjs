@@ -1,4 +1,4 @@
-export class ShowDto {
+export class LinkInfoDto {
   longUrl:string
   shortLink:string
 }
