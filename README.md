@@ -4,7 +4,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A minimal URL Shortener  App Build With  [Nest] js app (https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
@@ -15,33 +15,18 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
+# Build The DB
+$ npm run db:migrate
 
-# watch mode
+# Run in Dev Mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
+# Check The Swagger 
+http://localhost:3000
+
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
 
 - Author - [Mojtaba Banaei](https://banaie.ir)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
-
-  Nest is [MIT licensed](LICENSE).

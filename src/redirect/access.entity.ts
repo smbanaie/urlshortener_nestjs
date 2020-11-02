@@ -39,7 +39,7 @@ export class Accesses {
   @Column({ length: 50})
   os: string;
 
-  @Column({ length: 50, name:"agent_type"})
+  @Column({ length: 50, name :'agent_type'})
   device: string;
 
   @ManyToOne(() => UrlLink)

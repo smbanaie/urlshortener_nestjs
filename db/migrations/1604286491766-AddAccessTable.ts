@@ -44,7 +44,7 @@ export class AddAccessTable1604286491766 implements MigrationInterface {
                     length: '100',
                 },
                 {
-                    name: 'device',
+                    name: 'agent_type',
                     type: 'varchar',
                     length: '50',
                 },
