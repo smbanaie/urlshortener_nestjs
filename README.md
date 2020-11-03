@@ -12,6 +12,14 @@ A minimal URL Shortener  App Build With  [Nest] js app (https://github.com/nestj
 $ npm install
 ```
 
+## Prerequisites
+
+- make sure that the ***Redis Server*** is run 
+  -  if you have changed the redis default settings, set the the correct redis host and port in `config/redis.config.ts` file 
+- 
+
+
+
 ## Running the app
 
 ```bash

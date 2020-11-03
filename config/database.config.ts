@@ -3,6 +3,8 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 const envName = process.env.NODE_ENV || 'development';
 const databaseName = `shortener_${envName}.sqlite3`;
 
+
+
 export const configuration: TypeOrmModuleOptions = {
   type: 'sqlite',
   database: `db/${databaseName}`,

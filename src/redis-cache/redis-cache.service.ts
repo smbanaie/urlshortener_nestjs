@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import * as Redis from 'ioredis'
 import { ShortenerService } from  '../shortener/shortener.service'
+import { configuration as RedisConfig } from '../../config/redis.config';
 
 
 const client = new Redis({
-    host: 'localhost',
-    port: 6379,
+    host: RedisConfig.host,
+    port: RedisConfig.port,
     // password: 'YOUR_PASSWORD',
 });
 
