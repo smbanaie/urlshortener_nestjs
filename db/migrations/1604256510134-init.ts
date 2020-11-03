@@ -10,11 +10,10 @@ export class init1604256510134 implements MigrationInterface {
             columns: [
                 {
                     name: 'id',
-                    type: 'INTEGER',
+                    type: 'uuid',
                     isPrimary: true,
                     isGenerated: true,
-                    generationStrategy: 'increment',
-                    isNullable: false,
+                    generationStrategy: 'uuid',
                 },
                 {
                     name: 'url',
@@ -24,15 +23,14 @@ export class init1604256510134 implements MigrationInterface {
                 },
                 {
                     name: 'user_id',
-                    type: 'INTEGER',
-                    length: '32',
+                    type: 'uuid',
                     isNullable: false,
                     isUnique: false,
                 },
                 {
                     name: 'code',
                     type: 'char',
-                    length: '6',
+                    length: '10',
                     isNullable: false,
                     isUnique: true,
                 },

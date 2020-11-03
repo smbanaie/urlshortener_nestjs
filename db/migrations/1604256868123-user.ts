@@ -9,11 +9,10 @@ export class user1604256868123 implements MigrationInterface {
           columns: [
             {
               name: 'id',
-              type: 'integer',
+              type: 'uuid',
               isPrimary: true,
-              isNullable: false,
               isGenerated: true,
-              generationStrategy: 'increment',
+              generationStrategy: 'uuid',
             },
             {
               name: 'username',
@@ -24,7 +23,7 @@ export class user1604256868123 implements MigrationInterface {
             {
                 name: 'password',
                 type: 'varchar',
-                length: '50',
+                length: '100',
                 isNullable: false, 
               },
               {

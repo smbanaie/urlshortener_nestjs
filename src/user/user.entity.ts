@@ -1,6 +1,7 @@
 import {
     Entity,
     PrimaryGeneratedColumn,
+    Generated,
     CreateDateColumn,
     Column,
     BeforeInsert,
@@ -17,7 +18,8 @@ import { Exclude } from 'class-transformer';
 @Entity('user')
 export class UserEntity {  
     @PrimaryGeneratedColumn()
-    id: number;
+    @Generated('uuid')
+    id: string;
 
     @Column({ 
         type: 'varchar', 

@@ -1,6 +1,7 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
+  Generated,
   CreateDateColumn,
   Column,
   ManyToOne,
@@ -14,7 +15,8 @@ import { UserEntity } from '../user/user.entity'
 export class UrlLink {
   @Exclude()
   @PrimaryGeneratedColumn()
-  id: number;
+  @Generated('uuid')
+  id: string;
 
   @Column({ length: 2000 })
   @Length(10,2000)
@@ -22,7 +24,7 @@ export class UrlLink {
 
   @Exclude()
   @Column()
-  user_id: number;
+  user_id: string;
 
   @Exclude()
   @Column({ length: 10 })

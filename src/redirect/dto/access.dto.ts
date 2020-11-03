@@ -10,7 +10,7 @@ export class CreateAccessInfoDto {
   referrerURL?: string;
 
   @ApiProperty()
-  link_id: number;
+  link_id: string;
 
   @ApiProperty()
   userAgent: string;

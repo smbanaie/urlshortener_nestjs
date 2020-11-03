@@ -4,7 +4,8 @@ import {
   CreateDateColumn,
   Column,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  Generated
 } from 'typeorm';
 import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max, IsIP} from "class-validator";
 import { Exclude } from 'class-transformer';
@@ -14,14 +15,15 @@ import { UrlLink } from '../shortener/shortener.entity'
 export class Accesses {
   @Exclude()
   @PrimaryGeneratedColumn()
-  id: number;
+  @Generated('uuid')
+  id: string;
 
   @Column({ length: 2000,name: 'referrer_url' })
   referrerURL: string;
 
   @Exclude()
   @Column()
-  link_id: number;
+  link_id: string;
 
   @Column({ length: 2000, name: 'user_agent'})
   userAgent: string;

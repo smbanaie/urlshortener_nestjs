@@ -8,15 +8,14 @@ export class AddAccessTable1604286491766 implements MigrationInterface {
             columns: [
                 {
                     name: 'id',
-                    type: 'integer',
+                    type: 'uuid',
                     isPrimary: true,
-                    isNullable: false,
                     isGenerated: true,
-                    generationStrategy: 'increment',
+                    generationStrategy: 'uuid',
                 },
                 {
                     name: 'link_id',
-                    type: 'integer',
+                    type: 'uuid',
                     isNullable: false,
                 },
                 {
