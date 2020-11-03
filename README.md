@@ -15,11 +15,20 @@ $ npm install
 ## Prerequisites
 
 - make sure that the ***Redis Server*** is up 
+  
   -  if you have changed the redis default settings, set the the correct redis host and port in `config/redis.config.ts` file 
+  
 - make sure that the postgres (I used V12) is running 
   - Set the *Credentials* in `config/de.config.ts` (configuration class)
   - create the database `shortener_development` manually 
-- c
+  
+- Run Cassandra and in cqlsh  (cassandra default cmd) run these codes: 
+
+  - ``` sql
+    Create keyspace Analytics with replication={'class':SimpleStrategy,'replication_factor': 1};
+    ```
+
+  - 
 
 
 

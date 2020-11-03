@@ -13,10 +13,14 @@ import { Accesses } from './redirect/access.entity';
 import { RedisCacheService } from './redis-cache/redis-cache.service';
 import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import { ShortenerService } from './shortener/shortener.service';
+import { AnalyticsService } from './analytics/analytics.service';
+import { AnalyticsController } from './analytics/analytics.controller';
+import { AnalyticsModule } from './analytics/analytics.module';
 import { UrlLink }  from './shortener/shortener.entity'
 
 @Module({
-  imports: [TypeOrmModule.forRoot(DBConfig),  TypeOrmModule.forFeature([UserEntity, Accesses, UrlLink]), LinkModule, UserModule, AuthModule, RedirectModule, RedisCacheModule],
-  providers: [UsersService, AuthService, RedirectService, ShortenerService, RedisCacheService]
+  imports: [TypeOrmModule.forRoot(DBConfig),  TypeOrmModule.forFeature([UserEntity, Accesses, UrlLink]), LinkModule, UserModule, AuthModule, RedirectModule, RedisCacheModule, AnalyticsModule],
+  providers: [UsersService, AuthService, RedirectService, ShortenerService, RedisCacheService, AnalyticsService],
+  controllers: [AnalyticsController]
   })
 export class AppModule {}
