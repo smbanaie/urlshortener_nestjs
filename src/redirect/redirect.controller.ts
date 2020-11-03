@@ -1,22 +1,22 @@
-import { Header } from '@nestjs/common';
-import { Controller, Get, Body, Req, Res, Param, UseGuards , Headers} from '@nestjs/common';
-import { Request } from 'express'
+import { Controller, Get, Req, Res, Param, CacheKey, CacheTTL, Headers, UseInterceptors} from '@nestjs/common';
 import {ApiResponse} from '@nestjs/swagger';
 import { ShortenerService } from  '../shortener/shortener.service'
-import { HttpException,HttpStatus } from '@nestjs/common';
+import { HttpException,HttpStatus  } from '@nestjs/common';
 import { CreateAccessInfoDto } from './dto/access.dto'
 import { RedirectService } from './redirect.service'
+import { RedisCacheService } from '../redis-cache/redis-cache.service';
 import * as useragent from 'useragent';
 
 @Controller('r')
 export class RedirectController {
     constructor(
         private readonly shortenerService: ShortenerService,
-        private readonly redirectService: RedirectService
+        private readonly redirectService: RedirectService,
+        private readonly redisCacheService: RedisCacheService,
+
         ) {}
     @Get(':code')
     @ApiResponse({ status: 301, description: 'Redirect By Short Code ' })
-    
     async redirect(@Res() res, @Param("code") short_code: string, @Req() req, @Headers() header) {
         const link = await this.shortenerService.link_info(short_code)
         let access_log  = new CreateAccessInfoDto();
@@ -34,7 +34,7 @@ export class RedirectController {
             this.redirectService.log_redirect_stats(access_log);
 
 
-            res.redirect(link.longUrl)
+            res.redirect( await this.redisCacheService.getLongURL(short_code))
         }
         else 
             throw new HttpException("The provided Code is Invalid!", HttpStatus.BAD_REQUEST);    

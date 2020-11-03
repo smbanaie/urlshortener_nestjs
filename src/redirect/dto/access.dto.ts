@@ -27,4 +27,5 @@ export class CreateAccessInfoDto {
   
   @ApiProperty()
   os: string;
+  
 }
