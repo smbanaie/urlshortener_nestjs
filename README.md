@@ -19,8 +19,8 @@ $ npm install
   -  if you have changed the redis default settings, set the the correct redis host and port in `config/redis.config.ts` file 
   
 - make sure that the ***postgres*** (I used V9.5) is running 
-  - Set the *Credentials* in `config/de.config.ts` (configuration class)
-  - create the database `shortener_development` manually 
+  - Set the *Credentials* in `config/database.config.ts` (configuration class)
+  - create the database `shortener_development` **manually** 
   
   
 
