@@ -12,7 +12,7 @@ import { UserDto } from '../user/dto/show.dto'
 
 @Controller("api/v1/shorten")
 export class LinkShortenerController {
-  constructor(private readonly service: ShortenerService) {}
+  constructor(private readonly shortenerService: ShortenerService) {}
 
   @Post('link')
   @Header('Content-Type', 'application/json')
@@ -23,7 +23,7 @@ export class LinkShortenerController {
   async create(@Req() req: Request, @Body() createShortLinkDto: CreateShortLinkDto): Promise<LinkInfoDto> {
     const user = <UserDto>req.user;
     console.log(`User : ${user}`)
-    return this.service.create(user, createShortLinkDto);
+    return this.shortenerService.create(user, createShortLinkDto);
   }
 
 }

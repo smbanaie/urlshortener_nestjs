@@ -8,7 +8,6 @@ import { LinkModule } from '../shortener/shortener.module'
 @Module({
     imports: [
         TypeOrmModule.forFeature([UrlLink]),
-        LinkModule
       ],
     providers: [  RedisCacheService, ShortenerService ], 
   })
